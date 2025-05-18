@@ -14,11 +14,11 @@ public class Product implements Serializable {
     public Product(int id, String name, double sellingPrice, double importPrice) {
         this.id = id;
         this.name = name;
-        this.description = description;
+        this.description = "";
         this.sellingPrice = sellingPrice;
         this.importPrice = importPrice;
-        this.stock = stock;
-        this.type = type;
+        this.stock = 0;
+        this.type = "";
     }
 
     public int getId() { return id; }
@@ -28,6 +28,10 @@ public class Product implements Serializable {
     public double getImportPrice() { return importPrice; }
     public int getStock() { return stock; }
     public String getType() { return type; }
+
+    public void setDescription(String description) { this.description = description; }
+    public void setStock(int stock) { this.stock = stock; }
+    public void setType(String type) { this.type = type; }
 
     public byte[] getPrice() {
         return new byte[0];

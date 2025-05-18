@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE OrderDetail (orderId INTEGER, productId INTEGER, quantity INTEGER, unitPrice REAL, PRIMARY KEY(orderId, productId), FOREIGN KEY(orderId) REFERENCES 'Order'(id), FOREIGN KEY(productId) REFERENCES Product(id))");
         db.execSQL("CREATE TABLE Supplier (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, phone TEXT, address TEXT)");
 
-        // Dữ liệu mẫu
+        // Sample data
         db.execSQL("INSERT INTO User (name, email, password, role) VALUES ('Admin', 'admin@shop.com', 'admin123', 'Admin')");
         db.execSQL("INSERT INTO User (name, email, password, role) VALUES ('Nhan Vien 1', 'nv1@shop.com', 'nv123', 'Employee')");
     }
@@ -78,16 +79,74 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         List<Product> productList = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM Product", null);
-        while (cursor.moveToNext()) {
-            @SuppressLint("Range") Product product = new Product(
-                cursor.getInt(cursor.getColumnIndex("id")),
-                cursor.getString(cursor.getColumnIndex("name")),
-                    cursor.getDouble(cursor.getColumnIndex("sellingPrice")),
-                cursor.getDouble(cursor.getColumnIndex("importPrice"))
-            );
-            productList.add(product);
+        if (cursor.moveToFirst()) {
+            do {
+                @SuppressLint("Range") Product product = new Product(
+                        cursor.getInt(cursor.getColumnIndexOrThrow("id")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("name")),
+                        cursor.getDouble(cursor.getColumnIndexOrThrow("sellingPrice")),
+                        cursor.getDouble(cursor.getColumnIndexOrThrow("importPrice"))
+                );
+                product.setDescription(cursor.getString(cursor.getColumnIndexOrThrow("description")));
+                product.setStock(cursor.getInt(cursor.getColumnIndexOrThrow("stock")));
+                product.setType(cursor.getString(cursor.getColumnIndexOrThrow("type")));
+                productList.add(product);
+            } while (cursor.moveToNext());
         }
         cursor.close();
         return productList;
+    }
+
+    public void deleteProduct(int productId) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            db.delete("OrderDetail", "productId = ?", new String[]{String.valueOf(productId)});
+            db.delete("Product", "id = ?", new String[]{String.valueOf(productId)});
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.e("DatabaseHelper", "Error deleting product: " + e.getMessage());
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    public void deleteProducts(List<Integer> productIds) {
+        if (productIds.isEmpty()) {
+            Log.d("DatabaseHelper", "No product IDs provided for deletion");
+            return;
+        }
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            StringBuilder placeholders = new StringBuilder();
+            String[] args = new String[productIds.size()];
+            for (int i = 0; i < productIds.size(); i++) {
+                placeholders.append(i == 0 ? "?" : ",?");
+                args[i] = String.valueOf(productIds.get(i));
+            }
+            db.delete("OrderDetail", "productId IN (" + placeholders.toString() + ")", args);
+            int deletedRows = db.delete("Product", "id IN (" + placeholders.toString() + ")", args);
+            Log.d("DatabaseHelper", "Deleted " + deletedRows + " products, IDs: " + productIds);
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.e("DatabaseHelper", "Error deleting products: " + e.getMessage());
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    public void deleteAllProducts() {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            db.execSQL("DELETE FROM OrderDetail");
+            db.execSQL("DELETE FROM Product");
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.e("DatabaseHelper", "Error deleting all products: " + e.getMessage());
+        } finally {
+            db.endTransaction();
+        }
     }
 }
