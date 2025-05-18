@@ -29,7 +29,10 @@ public class Product implements Serializable {
     public int getStock() { return stock; }
     public String getType() { return type; }
 
+    public void setName(String name) { this.name = name; }
     public void setDescription(String description) { this.description = description; }
+    public void setSellingPrice(double sellingPrice) { this.sellingPrice = sellingPrice; }
+    public void setImportPrice(double importPrice) { this.importPrice = importPrice; }
     public void setStock(int stock) { this.stock = stock; }
     public void setType(String type) { this.type = type; }
 

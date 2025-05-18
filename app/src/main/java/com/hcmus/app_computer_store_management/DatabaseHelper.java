@@ -55,7 +55,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT role FROM User WHERE email = ?", new String[]{email});
         if (cursor.moveToFirst()) {
-            @SuppressLint("Range") String role = cursor.getString(cursor.getColumnIndex("role"));
+            @SuppressLint("Range") String role = cursor.getString(cursor.getColumnIndexOrThrow("role"));
             cursor.close();
             return role;
         }
@@ -95,6 +95,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return productList;
+    }
+
+    public void updateProduct(Product product) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("name", product.getName());
+        values.put("description", product.getDescription());
+        values.put("sellingPrice", product.getSellingPrice());
+        values.put("importPrice", product.getImportPrice());
+        values.put("stock", product.getStock());
+        values.put("type", product.getType());
+        db.update("Product", values, "id = ?", new String[]{String.valueOf(product.getId())});
     }
 
     public void deleteProduct(int productId) {
