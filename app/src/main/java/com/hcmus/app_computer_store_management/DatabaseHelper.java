@@ -27,9 +27,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE OrderDetail (orderId INTEGER, productId INTEGER, quantity INTEGER, unitPrice REAL, PRIMARY KEY(orderId, productId), FOREIGN KEY(orderId) REFERENCES 'Order'(id), FOREIGN KEY(productId) REFERENCES Product(id))");
         db.execSQL("CREATE TABLE Supplier (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, phone TEXT, address TEXT)");
 
-        // Sample data
+        // Sample data for User
         db.execSQL("INSERT INTO User (name, email, password, role) VALUES ('Admin', 'admin@shop.com', 'admin123', 'Admin')");
         db.execSQL("INSERT INTO User (name, email, password, role) VALUES ('Nhan Vien 1', 'nv1@shop.com', 'nv123', 'Employee')");
+
+        // Insert sample products
+        insertSampleProducts(db);
+    }
+    private void insertSampleProducts(SQLiteDatabase db) {
+        for (Product product : SampleDataGenerator.getSampleProducts()) {
+            ContentValues values = new ContentValues();
+            values.put("name", product.getName());
+            values.put("description", product.getDescription());
+            values.put("sellingPrice", product.getSellingPrice());
+            values.put("importPrice", product.getImportPrice());
+            values.put("stock", product.getStock());
+            values.put("type", product.getType());
+            db.insert("Product", null, values);
+        }
     }
 
     @Override
@@ -160,5 +175,79 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } finally {
             db.endTransaction();
         }
+    }
+
+    // Thống kê doanh thu theo tháng
+    public List<RevenueStat> getMonthlyRevenue(String startDate, String endDate) {
+        List<RevenueStat> stats = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+
+        String query = "SELECT strftime('%Y-%m', o.date) as month, " +
+                "SUM(od.quantity * od.unitPrice) as revenue " +
+                "FROM 'Order' o JOIN OrderDetail od ON o.id = od.orderId ";
+        if (startDate != null && endDate != null) {
+            query += "WHERE o.date BETWEEN ? AND ? ";
+        }
+        query += "GROUP BY month ORDER BY month";
+
+        Cursor cursor = startDate != null && endDate != null ?
+                db.rawQuery(query, new String[]{startDate, endDate}) :
+                db.rawQuery(query, null);
+
+        while (cursor.moveToNext()) {
+            stats.add(new RevenueStat(
+                    cursor.getString(0),
+                    cursor.getDouble(1)
+            ));
+        }
+        cursor.close();
+        return stats;
+    }
+
+    // Thống kê sản phẩm bán chạy
+    public List<ProductStat> getTopSellingProducts(int limit, String startDate, String endDate) {
+        List<ProductStat> stats = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+
+        String query = "SELECT p.id, p.name, SUM(od.quantity) as totalSold " +
+                "FROM Product p JOIN OrderDetail od ON p.id = od.productId " +
+                "JOIN 'Order' o ON od.orderId = o.id ";
+        if (startDate != null && endDate != null) {
+            query += "WHERE o.date BETWEEN ? AND ? ";
+        }
+        query += "GROUP BY p.id ORDER BY totalSold DESC LIMIT ?";
+
+        Cursor cursor = startDate != null && endDate != null ?
+                db.rawQuery(query, new String[]{startDate, endDate, String.valueOf(limit)}) :
+                db.rawQuery(query, new String[]{String.valueOf(limit)});
+
+        while (cursor.moveToNext()) {
+            stats.add(new ProductStat(
+                    cursor.getInt(0),
+                    cursor.getString(1),
+                    cursor.getInt(2)
+            ));
+        }
+        cursor.close();
+        return stats;
+    }
+
+    // Thống kê tồn kho
+    public List<InventoryStat> getInventoryStatus() {
+        List<InventoryStat> stats = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+
+        String query = "SELECT id, name, stock FROM Product ORDER BY stock ASC";
+
+        Cursor cursor = db.rawQuery(query, null);
+        while (cursor.moveToNext()) {
+            stats.add(new InventoryStat(
+                    cursor.getInt(0),
+                    cursor.getString(1),
+                    cursor.getInt(2)
+            ));
+        }
+        cursor.close();
+        return stats;
     }
 }

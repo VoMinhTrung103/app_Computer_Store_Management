@@ -1,12 +1,14 @@
 package com.hcmus.app_computer_store_management;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ProductDetailActivity extends AppCompatActivity {
-    private EditText productName, productDescription, productPrice, productStock;
+    private EditText productName, productDescription, productPrice, productImportPrice, productStock, productType;
     private Button backButton, editButton, saveButton;
     private Product product;
     private DatabaseHelper dbHelper;
@@ -20,54 +22,78 @@ public class ProductDetailActivity extends AppCompatActivity {
         productName = findViewById(R.id.productName);
         productDescription = findViewById(R.id.productDescription);
         productPrice = findViewById(R.id.productPrice);
+        productImportPrice = findViewById(R.id.productImportPrice);
         productStock = findViewById(R.id.productStock);
+        productType = findViewById(R.id.productType);
         backButton = findViewById(R.id.backButton);
         editButton = findViewById(R.id.editButton);
         saveButton = findViewById(R.id.saveButton);
+
         dbHelper = new DatabaseHelper(this);
 
         product = (Product) getIntent().getSerializableExtra("PRODUCT");
         if (product != null) {
-            productName.setText(product.getName());
-            productDescription.setText(product.getDescription());
-            productPrice.setText(String.valueOf(product.getSellingPrice()));
-            productStock.setText(String.valueOf(product.getStock()));
+            loadProductDetails();
         }
 
+        setupButtonListeners();
+    }
+
+    private void loadProductDetails() {
+        productName.setText(product.getName());
+        productDescription.setText(product.getDescription());
+        productPrice.setText(Utils.formatCurrency(product.getSellingPrice()));
+        productImportPrice.setText(Utils.formatCurrency(product.getImportPrice()));
+        productStock.setText(String.valueOf(product.getStock()));
+        productType.setText(product.getType());
+    }
+
+    private void setupButtonListeners() {
         editButton.setOnClickListener(v -> {
             if (!isEditing) {
-                isEditing = true;
-                productName.setEnabled(true);
-                productDescription.setEnabled(true);
-                productPrice.setEnabled(true);
-                productStock.setEnabled(true);
-                editButton.setVisibility(android.view.View.GONE);
-                saveButton.setVisibility(android.view.View.VISIBLE);
+                enableEditing(true);
+                // Khi chuyển sang chế độ edit, hiển thị giá dạng số không có định dạng
+                productPrice.setText(String.valueOf(product.getSellingPrice()));
+                productImportPrice.setText(String.valueOf(product.getImportPrice()));
             }
         });
 
         saveButton.setOnClickListener(v -> {
             if (isEditing && product != null) {
                 try {
-                    product.setName(productName.getText().toString());
-                    product.setDescription(productDescription.getText().toString());
-                    product.setSellingPrice(Double.parseDouble(productPrice.getText().toString()));
-                    product.setStock(Integer.parseInt(productStock.getText().toString()));
+                    updateProductFromInputs();
                     dbHelper.updateProduct(product);
-                    isEditing = false;
-                    productName.setEnabled(false);
-                    productDescription.setEnabled(false);
-                    productPrice.setEnabled(false);
-                    productStock.setEnabled(false);
-                    editButton.setVisibility(android.view.View.VISIBLE);
-                    saveButton.setVisibility(android.view.View.GONE);
+                    enableEditing(false);
+                    loadProductDetails(); // Reload để hiển thị lại giá đã định dạng
+                    Toast.makeText(this, "Cập nhật sản phẩm thành công", Toast.LENGTH_SHORT).show();
                 } catch (NumberFormatException e) {
-                    // Handle invalid number input (e.g., show a toast)
-                    e.printStackTrace();
+                    Toast.makeText(this, "Vui lòng nhập số hợp lệ cho giá và tồn kho", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
         backButton.setOnClickListener(v -> finish());
+    }
+
+    private void updateProductFromInputs() {
+        product.setName(productName.getText().toString());
+        product.setDescription(productDescription.getText().toString());
+        product.setSellingPrice(Double.parseDouble(productPrice.getText().toString().replaceAll("[^\\d.]", "")));
+        product.setImportPrice(Double.parseDouble(productImportPrice.getText().toString().replaceAll("[^\\d.]", "")));
+        product.setStock(Integer.parseInt(productStock.getText().toString()));
+        product.setType(productType.getText().toString());
+    }
+
+    private void enableEditing(boolean enable) {
+        isEditing = enable;
+        productName.setEnabled(enable);
+        productDescription.setEnabled(enable);
+        productPrice.setEnabled(enable);
+        productImportPrice.setEnabled(enable);
+        productStock.setEnabled(enable);
+        productType.setEnabled(enable);
+
+        editButton.setVisibility(enable ? View.GONE : View.VISIBLE);
+        saveButton.setVisibility(enable ? View.VISIBLE : View.GONE);
     }
 }

@@ -28,6 +28,7 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
         dbHelper = new DatabaseHelper(this);
 
         productRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        insertSampleDataIfEmpty(); // Kiểm tra và chèn dữ liệu mẫu
         loadProducts();
 
         addProductButton.setOnClickListener(v -> {
@@ -59,6 +60,15 @@ public class ProductListActivity extends AppCompatActivity implements ProductAda
                 Log.d("ProductListActivity", "No products selected for deletion");
             }
         });
+    }
+
+    private void insertSampleDataIfEmpty() {
+        List<Product> productList = dbHelper.getAllProducts();
+        if (productList.isEmpty()) {
+            for (Product product : SampleDataGenerator.getSampleProducts()) {
+                dbHelper.addProduct(product);
+            }
+        }
     }
 
     private void loadProducts() {

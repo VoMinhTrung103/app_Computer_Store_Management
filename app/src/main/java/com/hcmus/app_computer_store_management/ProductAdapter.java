@@ -41,9 +41,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product product = productList.get(position);
         holder.productNameTextView.setText(product.getName());
-        holder.productPriceTextView.setText("Giá: " + product.getSellingPrice());
+        holder.productPriceTextView.setText("Giá: " + Utils.formatCurrency(product.getSellingPrice()));
 
-        // Handle checkbox state
         holder.checkboxSelect.setChecked(selectedProductIds.contains(product.getId()));
         holder.checkboxSelect.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
@@ -51,13 +50,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             } else {
                 selectedProductIds.remove(Integer.valueOf(product.getId()));
             }
-            Log.d("ProductAdapter", "Selected IDs: " + selectedProductIds);
             if (selectionChangedListener != null) {
                 selectionChangedListener.onSelectionChanged(!selectedProductIds.isEmpty());
             }
         });
 
-        // Handle item click to view details
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ProductDetailActivity.class);
             intent.putExtra("PRODUCT", product);
