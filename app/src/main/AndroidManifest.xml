@@ -43,13 +43,7 @@
             android:name=".activities.AddProductActivity"
             android:exported="false"/>
         <activity
-            android:name=".activities.CustomerListActivity"
-            android:exported="false"/>
-        <activity
             android:name=".activities.OrderDetailActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".activities.ImportProductActivity"
             android:exported="false"/>
     </application>
 </manifest>
