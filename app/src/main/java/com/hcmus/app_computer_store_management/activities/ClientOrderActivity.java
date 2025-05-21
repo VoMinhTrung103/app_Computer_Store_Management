@@ -91,7 +91,8 @@ public class ClientOrderActivity extends AppCompatActivity implements ProductAda
 
         try {
             // Sử dụng customerId = 2 (Customer 2) từ dữ liệu mẫu trong bảng Customer
-            long orderId = dbHelper.createOrder("2", "2025-05-21", orderDetails);
+            String today = com.hcmus.app_computer_store_management.utils.Utils.getCurrentDate();
+            long orderId = dbHelper.createOrder("2", today, orderDetails);
             Toast.makeText(this, "Đặt hàng thành công, ID: " + orderId, Toast.LENGTH_SHORT).show();
             selectedProducts.clear();
             quantityInputs.clear();

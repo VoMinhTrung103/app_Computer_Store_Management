@@ -17,6 +17,7 @@ import com.hcmus.app_computer_store_management.R;
 import com.hcmus.app_computer_store_management.utils.Utils;
 import com.hcmus.app_computer_store_management.activities.ProductDetailActivity;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
@@ -24,7 +25,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     private Context context;
     private List<Integer> selectedProductIds;
     private OnSelectionChangedListener selectionChangedListener;
-    private boolean isSaleMode; // Thêm cờ để bật/tắt chế độ bán hàng
+    private boolean isSaleMode;
+    private HashMap<Integer, String> quantityMap = new HashMap<>(); // Lưu số lượng nhập cho từng sản phẩm
 
     public interface OnSelectionChangedListener {
         void onSelectionChanged(boolean hasSelections);
@@ -41,7 +43,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_product_sale, parent, false); // Sử dụng item_product_sale.xml cho chế độ bán hàng
+        View view = LayoutInflater.from(context).inflate(R.layout.item_product_sale, parent, false);
         return new ProductViewHolder(view);
     }
 
@@ -52,31 +54,57 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.productPriceTextView.setText("Giá: " + Utils.formatCurrency(product.getSellingPrice()));
         holder.productStockTextView.setText("Tồn kho: " + product.getStock());
 
-        holder.checkboxSelect.setChecked(selectedProductIds.contains(product.getId()));
-        holder.checkboxSelect.setVisibility(isSaleMode ? View.GONE : View.VISIBLE); // Ẩn checkbox trong chế độ bán hàng
-        holder.quantityInput.setVisibility(isSaleMode ? View.VISIBLE : View.GONE); // Hiển thị EditText trong chế độ bán hàng
-
         if (isSaleMode) {
-            holder.quantityInput.setText("");
+            holder.checkboxSelect.setVisibility(View.GONE);
+            holder.quantityInput.setVisibility(View.VISIBLE);
+
+            // Giữ lại số lượng đã nhập khi scroll
+            String quantityStr = quantityMap.getOrDefault(product.getId(), "");
+            if (!quantityStr.equals(holder.quantityInput.getText().toString()))
+                holder.quantityInput.setText(quantityStr);
+
+            // Xóa TextWatcher cũ trước khi gán mới để tránh lặp callback
+            holder.quantityInput.setTag(holder.quantityInput.getId(), null);
             holder.quantityInput.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {}
+                @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+                @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
                 @Override
                 public void afterTextChanged(Editable s) {
+                    String value = s.toString().trim();
+                    if (!value.isEmpty() && value.matches("\\d+")) {
+                        int quantity = Integer.parseInt(value);
+                        if (quantity > 0) {
+                            if (!selectedProductIds.contains(product.getId()))
+                                selectedProductIds.add(product.getId());
+                            quantityMap.put(product.getId(), value);
+                        } else {
+                            selectedProductIds.remove((Integer) product.getId());
+                            quantityMap.remove(product.getId());
+                        }
+                    } else {
+                        selectedProductIds.remove((Integer) product.getId());
+                        quantityMap.remove(product.getId());
+                    }
                     if (selectionChangedListener != null) {
                         selectionChangedListener.onSelectionChanged(!selectedProductIds.isEmpty());
                     }
                 }
             });
+
             holder.itemView.setOnClickListener(v -> holder.quantityInput.requestFocus());
         } else {
+            holder.checkboxSelect.setVisibility(View.VISIBLE);
+            holder.quantityInput.setVisibility(View.GONE);
+
+            holder.checkboxSelect.setOnCheckedChangeListener(null);
+            holder.checkboxSelect.setChecked(selectedProductIds.contains(product.getId()));
+
             holder.checkboxSelect.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if (isChecked) {
-                    selectedProductIds.add(product.getId());
+                    if (!selectedProductIds.contains(product.getId()))
+                        selectedProductIds.add(product.getId());
                 } else {
-                    selectedProductIds.remove(Integer.valueOf(product.getId()));
+                    selectedProductIds.remove((Integer) product.getId());
                 }
                 if (selectionChangedListener != null) {
                     selectionChangedListener.onSelectionChanged(!selectedProductIds.isEmpty());
@@ -100,8 +128,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         return new ArrayList<>(selectedProductIds);
     }
 
+    public String getQuantityForProduct(int productId) {
+        return quantityMap.getOrDefault(productId, "");
+    }
+
     public void clearSelections() {
         selectedProductIds.clear();
+        quantityMap.clear();
         notifyDataSetChanged();
     }
 

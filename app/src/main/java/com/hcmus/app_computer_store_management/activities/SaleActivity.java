@@ -15,6 +15,9 @@ import com.hcmus.app_computer_store_management.models.Product;
 import com.hcmus.app_computer_store_management.adapters.ProductAdapter;
 import java.util.ArrayList;
 import java.util.List;
+import android.text.Editable;
+import android.text.TextWatcher;
+import com.hcmus.app_computer_store_management.utils.Utils;
 
 public class SaleActivity extends AppCompatActivity implements ProductAdapter.OnSelectionChangedListener {
     private RecyclerView productRecyclerView;
@@ -103,12 +106,10 @@ public class SaleActivity extends AppCompatActivity implements ProductAdapter.On
             Toast.makeText(this, "Lỗi khi tạo đơn hàng: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
-
     @Override
     public void onSelectionChanged(boolean hasSelections) {
         selectedProducts.clear();
         quantityInputs.clear();
-        double totalAmount = 0;
 
         if (hasSelections) {
             List<Integer> selectedIds = productAdapter.getSelectedProductIds();
@@ -117,7 +118,6 @@ public class SaleActivity extends AppCompatActivity implements ProductAdapter.On
                 if (product != null) {
                     selectedProducts.add(product);
 
-                    // Tìm EditText số lượng từ view của item trong RecyclerView
                     int position = productAdapter.getPositionForId(id);
                     View view = productRecyclerView.getLayoutManager().findViewByPosition(position);
                     if (view != null) {
@@ -125,24 +125,51 @@ public class SaleActivity extends AppCompatActivity implements ProductAdapter.On
                         if (quantityInput != null) {
                             quantityInputs.add(quantityInput);
 
-                            String quantityStr = quantityInput.getText().toString().trim();
-                            if (!quantityStr.isEmpty()) {
-                                try {
-                                    int quantity = Integer.parseInt(quantityStr);
-                                    if (quantity > 0) {
-                                        totalAmount += quantity * product.getSellingPrice();
-                                    }
-                                } catch (NumberFormatException e) {
-                                    // Ignore invalid input
+                            // Xóa các TextWatcher cũ để tránh lặp lại
+                            quantityInput.addTextChangedListener(new TextWatcher() {
+                                @Override
+                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+                                @Override
+                                public void onTextChanged(CharSequence s, int start, int before, int count) {}
+                                @Override
+                                public void afterTextChanged(Editable s) {
+                                    updateTotalAndButton();
                                 }
-                            }
+                            });
                         }
                     }
                 }
             }
         }
+        updateTotalAndButton();
+    }
 
-        totalAmountTextView.setText("Tổng tiền: " + totalAmount + " VNĐ");
-        createOrderButton.setEnabled(hasSelections && !quantityInputs.isEmpty());
+    // Hàm cập nhật tổng tiền và trạng thái nút
+    private void updateTotalAndButton() {
+        double totalAmount = 0;
+        boolean allValid = true;
+
+        for (int i = 0; i < selectedProducts.size(); i++) {
+            Product product = selectedProducts.get(i);
+            EditText quantityInput = quantityInputs.get(i);
+            String quantityStr = quantityInput.getText().toString().trim();
+            if (!quantityStr.isEmpty()) {
+                try {
+                    int quantity = Integer.parseInt(quantityStr);
+                    if (quantity > 0 && quantity <= product.getStock()) {
+                        totalAmount += quantity * product.getSellingPrice();
+                    } else {
+                        allValid = false;
+                    }
+                } catch (NumberFormatException e) {
+                    allValid = false;
+                }
+            } else {
+                allValid = false;
+            }
+        }
+
+        totalAmountTextView.setText("Tổng tiền: " + Utils.formatCurrency(totalAmount));
+        createOrderButton.setEnabled(allValid && !selectedProducts.isEmpty());
     }
 }
