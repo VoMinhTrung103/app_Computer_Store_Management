@@ -9,7 +9,6 @@ import com.hcmus.app_computer_store_management.DatabaseHelper;
 import com.hcmus.app_computer_store_management.models.Order;
 import com.hcmus.app_computer_store_management.R;
 import com.hcmus.app_computer_store_management.adapters.OrderAdapter;
-import java.util.ArrayList;
 import java.util.List;
 
 public class OrderListActivity extends AppCompatActivity {
@@ -34,10 +33,7 @@ public class OrderListActivity extends AppCompatActivity {
     }
 
     private void loadOrders() {
-        List<Order> orderList = new ArrayList<>();
-        // Lấy danh sách đơn hàng từ database
-        // Hiện tại chưa có dữ liệu mẫu, sẽ hiển thị danh sách rỗng
-        // Có thể thêm dữ liệu mẫu trong DatabaseHelper nếu cần
+        List<Order> orderList = dbHelper.getAllOrders();
         orderAdapter = new OrderAdapter(this, orderList);
         orderRecyclerView.setAdapter(orderAdapter);
     }

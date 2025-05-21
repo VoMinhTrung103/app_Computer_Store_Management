@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import com.hcmus.app_computer_store_management.models.InventoryStat;
+import com.hcmus.app_computer_store_management.models.Order;
+import com.hcmus.app_computer_store_management.models.OrderDetail;
 import com.hcmus.app_computer_store_management.models.Product;
 import com.hcmus.app_computer_store_management.models.ProductStat;
 import com.hcmus.app_computer_store_management.models.RevenueStat;
@@ -35,6 +37,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Sample data for User
         db.execSQL("INSERT INTO User (name, email, password, role) VALUES ('Admin', 'admin@shop.com', 'admin123', 'Admin')");
         db.execSQL("INSERT INTO User (name, email, password, role) VALUES ('Nhan Vien 1', 'nv1@shop.com', 'nv123', 'Employee')");
+
+        // Sample data for Customer
+        db.execSQL("INSERT INTO Customer (id, name, phone, address) VALUES (1, 'Customer 1', '0901234567', '123 Client St')");
+        db.execSQL("INSERT INTO Customer (id, name, phone, address) VALUES (2, 'Customer 2', '0901234568', '456 Client St')");
 
         // Insert sample products
         insertSampleProducts(db);
@@ -236,7 +242,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    // Methods for SaleActivity (Client role)
+    // Methods for SaleActivity and ClientOrderActivity
     public long createOrder(String customerId, String date, List<OrderDetailItem> items) {
         SQLiteDatabase db = getWritableDatabase();
         db.beginTransaction();
@@ -296,6 +302,53 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             this.quantity = quantity;
             this.unitPrice = unitPrice;
         }
+    }
+
+    // Methods for OrderListActivity and OrderDetailActivity
+    public List<Order> getAllOrders() {
+        List<Order> orderList = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery("SELECT * FROM 'Order'", null);
+            while (cursor.moveToNext()) {
+                @SuppressLint("Range") Order order = new Order(
+                        cursor.getInt(cursor.getColumnIndexOrThrow("id")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("date")),
+                        cursor.getInt(cursor.getColumnIndexOrThrow("customerId")),
+                        cursor.getDouble(cursor.getColumnIndexOrThrow("totalAmount"))
+                );
+                orderList.add(order);
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return orderList;
+    }
+
+    public List<OrderDetail> getOrderDetails(int orderId) {
+        List<OrderDetail> orderDetails = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = null;
+        try {
+            cursor = db.query("OrderDetail", null, "orderId = ?", new String[]{String.valueOf(orderId)}, null, null, null);
+            while (cursor.moveToNext()) {
+                @SuppressLint("Range") OrderDetail orderDetail = new OrderDetail(
+                        cursor.getInt(cursor.getColumnIndexOrThrow("orderId")),
+                        cursor.getInt(cursor.getColumnIndexOrThrow("productId")),
+                        cursor.getInt(cursor.getColumnIndexOrThrow("quantity")),
+                        cursor.getDouble(cursor.getColumnIndexOrThrow("unitPrice"))
+                );
+                orderDetails.add(orderDetail);
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return orderDetails;
     }
 
     // Statistics methods

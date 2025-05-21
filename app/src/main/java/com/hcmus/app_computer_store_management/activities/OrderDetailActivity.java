@@ -11,7 +11,6 @@ import com.hcmus.app_computer_store_management.models.Order;
 import com.hcmus.app_computer_store_management.models.OrderDetail;
 import com.hcmus.app_computer_store_management.R;
 import com.hcmus.app_computer_store_management.adapters.OrderDetailAdapter;
-import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDetailActivity extends AppCompatActivity {
@@ -46,9 +45,7 @@ public class OrderDetailActivity extends AppCompatActivity {
     }
 
     private void loadOrderDetails(int orderId) {
-        List<OrderDetail> orderDetails = new ArrayList<>();
-        // Lấy chi tiết đơn hàng từ database
-        // Hiện tại chưa có dữ liệu mẫu, sẽ hiển thị danh sách rỗng
+        List<OrderDetail> orderDetails = dbHelper.getOrderDetails(orderId);
         OrderDetailAdapter adapter = new OrderDetailAdapter(this, orderDetails);
         orderDetailsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         orderDetailsRecyclerView.setAdapter(adapter);

@@ -16,10 +16,10 @@ import com.hcmus.app_computer_store_management.adapters.ProductAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SaleActivity extends AppCompatActivity implements ProductAdapter.OnSelectionChangedListener {
+public class ClientOrderActivity extends AppCompatActivity implements ProductAdapter.OnSelectionChangedListener {
     private RecyclerView productRecyclerView;
     private ProductAdapter productAdapter;
-    private Button createOrderButton, backButton;
+    private Button placeOrderButton, backButton;
     private TextView totalAmountTextView;
     private DatabaseHelper dbHelper;
     private List<Product> selectedProducts;
@@ -28,10 +28,10 @@ public class SaleActivity extends AppCompatActivity implements ProductAdapter.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sale);
+        setContentView(R.layout.activity_client_order);
 
         productRecyclerView = findViewById(R.id.productRecyclerView);
-        createOrderButton = findViewById(R.id.createOrderButton);
+        placeOrderButton = findViewById(R.id.placeOrderButton);
         backButton = findViewById(R.id.backButton);
         totalAmountTextView = findViewById(R.id.totalAmountTextView);
         dbHelper = new DatabaseHelper(this);
@@ -41,8 +41,8 @@ public class SaleActivity extends AppCompatActivity implements ProductAdapter.On
         productRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         loadProducts();
 
-        createOrderButton.setEnabled(false);
-        createOrderButton.setOnClickListener(v -> createOrder());
+        placeOrderButton.setEnabled(false);
+        placeOrderButton.setOnClickListener(v -> placeOrder());
         backButton.setOnClickListener(v -> finish());
     }
 
@@ -52,7 +52,7 @@ public class SaleActivity extends AppCompatActivity implements ProductAdapter.On
         productRecyclerView.setAdapter(productAdapter);
     }
 
-    private void createOrder() {
+    private void placeOrder() {
         List<DatabaseHelper.OrderDetailItem> orderDetails = new ArrayList<>();
         double totalAmount = 0;
 
@@ -90,17 +90,17 @@ public class SaleActivity extends AppCompatActivity implements ProductAdapter.On
         }
 
         try {
-            // Sử dụng customerId = 1 (Customer 1) từ dữ liệu mẫu trong bảng Customer
-            long orderId = dbHelper.createOrder("1", "2025-05-21", orderDetails);
-            Toast.makeText(this, "Tạo đơn hàng thành công, ID: " + orderId, Toast.LENGTH_SHORT).show();
+            // Sử dụng customerId = 2 (Customer 2) từ dữ liệu mẫu trong bảng Customer
+            long orderId = dbHelper.createOrder("2", "2025-05-21", orderDetails);
+            Toast.makeText(this, "Đặt hàng thành công, ID: " + orderId, Toast.LENGTH_SHORT).show();
             selectedProducts.clear();
             quantityInputs.clear();
             productAdapter.clearSelections();
             totalAmountTextView.setText("Tổng tiền: 0 VNĐ");
-            createOrderButton.setEnabled(false);
+            placeOrderButton.setEnabled(false);
             loadProducts(); // Làm mới danh sách để cập nhật số lượng tồn kho
         } catch (Exception e) {
-            Toast.makeText(this, "Lỗi khi tạo đơn hàng: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Lỗi khi đặt hàng: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -117,7 +117,6 @@ public class SaleActivity extends AppCompatActivity implements ProductAdapter.On
                 if (product != null) {
                     selectedProducts.add(product);
 
-                    // Tìm EditText số lượng từ view của item trong RecyclerView
                     int position = productAdapter.getPositionForId(id);
                     View view = productRecyclerView.getLayoutManager().findViewByPosition(position);
                     if (view != null) {
@@ -143,6 +142,6 @@ public class SaleActivity extends AppCompatActivity implements ProductAdapter.On
         }
 
         totalAmountTextView.setText("Tổng tiền: " + totalAmount + " VNĐ");
-        createOrderButton.setEnabled(hasSelections && !quantityInputs.isEmpty());
+        placeOrderButton.setEnabled(hasSelections && !quantityInputs.isEmpty());
     }
 }
