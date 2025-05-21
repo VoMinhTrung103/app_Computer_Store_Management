@@ -5,77 +5,81 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Thêm Sản Phẩm"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="16dp"/>
+
+    <EditText
+        android:id="@+id/nameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tên Sản Phẩm"
+        android:inputType="text"
+        android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/descriptionEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Mô Tả"
+        android:inputType="textMultiLine"
+        android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/sellingPriceEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Giá Bán"
+        android:inputType="numberDecimal"
+        android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/importPriceEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Giá Nhập"
+        android:inputType="numberDecimal"
+        android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/stockEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Số Lượng Tồn Kho"
+        android:inputType="number"
+        android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/typeEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Loại Sản Phẩm"
+        android:inputType="text"
+        android:layout_marginBottom="16dp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="16dp">
+        android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_add" />
-
-        <TextView
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Thêm sản phẩm"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_marginStart="8dp"/>
+            android:text="Quay Lại"
+            android:layout_marginEnd="8dp"/>
+
+        <Button
+            android:id="@+id/saveProductButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Lưu Sản Phẩm"/>
     </LinearLayout>
-
-    <EditText
-        android:id="@+id/productNameEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Tên sản phẩm"
-        android:layout_marginBottom="16dp"/>
-
-    <EditText
-        android:id="@+id/productDescriptionEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Mô tả"
-        android:layout_marginBottom="16dp"/>
-
-    <EditText
-        android:id="@+id/productPriceEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Giá bán"
-        android:inputType="numberDecimal"
-        android:layout_marginBottom="16dp"/>
-
-    <EditText
-        android:id="@+id/productStockEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Tồn kho"
-        android:inputType="number"
-        android:layout_marginBottom="16dp"/>
-
-    <EditText
-        android:id="@+id/productTypeEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Loại sản phẩm (Máy tính, Linh kiện, Phụ kiện)"
-        android:layout_marginBottom="16dp"/>
-
-    <Button
-        android:id="@+id/saveButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Lưu"
-        android:drawableLeft="@drawable/ic_save"
-        android:layout_gravity="center"
-        android:layout_marginBottom="16dp"/>
-
-    <Button
-        android:id="@+id/backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Back"
-        android:drawableLeft="@drawable/ic_back"
-        android:layout_gravity="center"/>
 </LinearLayout>

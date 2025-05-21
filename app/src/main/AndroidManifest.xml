@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.hcmus.app_computer_store_management">
 
     <application
         android:allowBackup="true"
@@ -8,50 +9,47 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
         <activity
-            android:name=".ImportProductActivity"
-            android:exported="false">
-        </activity>
-        <activity
-            android:name=".StatisticActivity"
-            android:exported="false">
-        </activity>
-        <activity
-            android:name=".OrderDetailActivity"
-            android:exported="false">
-        </activity>
-        <activity
-            android:name=".OrderListActivity"
-            android:exported="false">
-        </activity>
-        <activity
-            android:name=".CustomerListActivity"
-            android:exported="false">
-        </activity>
-        <activity
-            android:name=".AddProductActivity"
-            android:exported="false">
-        </activity>
-        <activity
-            android:name=".ProductDetailActivity"
-            android:exported="false">
-        </activity>
-        <activity
-            android:name=".ProductListActivity"
-            android:exported="false">
-        </activity>
-        <activity
-            android:name=".MainActivity"
-            android:exported="false">
-        </activity>
-        <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activities.AdminMainActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".activities.ClientMainActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".activities.StatisticActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".activities.SaleActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".activities.OrderListActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".activities.ProductListActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".activities.ProductDetailActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".activities.AddProductActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".activities.CustomerListActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".activities.OrderDetailActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".activities.ImportProductActivity"
+            android:exported="false"/>
     </application>
-
 </manifest>

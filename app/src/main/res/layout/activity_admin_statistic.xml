@@ -8,49 +8,62 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Chi Tiết Đơn Hàng"
+        android:text="Thống Kê (Admin)"
         android:textSize="24sp"
         android:textStyle="bold"
         android:gravity="center"
         android:layout_marginBottom="16dp"/>
 
     <TextView
-        android:id="@+id/orderId"
-        android:layout_width="wrap_content"
+        android:id="@+id/filterTextView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Chọn khoảng thời gian"
         android:textSize="16sp"
         android:layout_marginBottom="8dp"/>
 
-    <TextView
-        android:id="@+id/orderDate"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/filterButton"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginBottom="8dp"/>
-
-    <TextView
-        android:id="@+id/customerId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginBottom="8dp"/>
-
-    <TextView
-        android:id="@+id/totalAmount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:text="Lọc Theo Ngày"
         android:layout_marginBottom="16dp"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Danh sách sản phẩm"
+        android:text="Doanh Thu Theo Tháng"
         android:textSize="18sp"
         android:layout_marginBottom="8dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/orderDetailsRecyclerView"
+        android:id="@+id/revenueRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sản Phẩm Bán Chạy"
+        android:textSize="18sp"
+        android:layout_marginBottom="8dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/topProductsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tình Trạng Tồn Kho"
+        android:textSize="18sp"
+        android:layout_marginBottom="8dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/inventoryRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

@@ -8,11 +8,18 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Danh Sách Sản Phẩm"
+        android:text="Bán Hàng"
         android:textSize="24sp"
         android:textStyle="bold"
         android:gravity="center"
         android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Danh sách sản phẩm"
+        android:textSize="18sp"
+        android:layout_marginBottom="8dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/productRecyclerView"
@@ -20,6 +27,14 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:id="@+id/totalAmountTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tổng tiền: 0 VNĐ"
+        android:textSize="18sp"
+        android:layout_marginBottom="8dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,18 +50,10 @@
             android:layout_marginEnd="8dp"/>
 
         <Button
-            android:id="@+id/addProductButton"
+            android:id="@+id/createOrderButton"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Thêm Sản Phẩm"
-            android:layout_marginEnd="8dp"/>
-
-        <Button
-            android:id="@+id/deleteProductButton"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Xóa Sản Phẩm"/>
+            android:text="Tạo Đơn Hàng"/>
     </LinearLayout>
 </LinearLayout>

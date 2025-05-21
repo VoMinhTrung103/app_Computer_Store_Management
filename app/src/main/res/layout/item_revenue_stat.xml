@@ -18,5 +18,5 @@
         android:layout_weight="1"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        android:textAlignment="textEnd"/>
+        android:gravity="end"/>
 </LinearLayout>

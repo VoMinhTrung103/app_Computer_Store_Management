@@ -7,6 +7,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import com.hcmus.app_computer_store_management.models.InventoryStat;
+import com.hcmus.app_computer_store_management.models.Product;
+import com.hcmus.app_computer_store_management.models.ProductStat;
+import com.hcmus.app_computer_store_management.models.RevenueStat;
+import com.hcmus.app_computer_store_management.utils.SampleDataGenerator;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +39,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Insert sample products
         insertSampleProducts(db);
     }
+
     private void insertSampleProducts(SQLiteDatabase db) {
         for (Product product : SampleDataGenerator.getSampleProducts()) {
             ContentValues values = new ContentValues();
@@ -58,44 +64,63 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    // Improved user authentication (consider adding password hashing in production)
     public boolean checkUser(String email, String password) {
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE email = ? AND password = ?", new String[]{email, password});
-        boolean exists = cursor.getCount() > 0;
-        cursor.close();
-        return exists;
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery("SELECT * FROM User WHERE email = ? AND password = ?", new String[]{email, password});
+            return cursor.getCount() > 0;
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
     }
 
     public String getUserRole(String email) {
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT role FROM User WHERE email = ?", new String[]{email});
-        if (cursor.moveToFirst()) {
-            @SuppressLint("Range") String role = cursor.getString(cursor.getColumnIndexOrThrow("role"));
-            cursor.close();
-            return role;
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery("SELECT role FROM User WHERE email = ?", new String[]{email});
+            if (cursor.moveToFirst()) {
+                @SuppressLint("Range") String role = cursor.getString(cursor.getColumnIndexOrThrow("role"));
+                return role;
+            }
+            return null;
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
         }
-        cursor.close();
-        return null;
     }
 
+    // Product management with transactions
     public void addProduct(Product product) {
         SQLiteDatabase db = getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("name", product.getName());
-        values.put("description", product.getDescription());
-        values.put("sellingPrice", product.getSellingPrice());
-        values.put("importPrice", product.getImportPrice());
-        values.put("stock", product.getStock());
-        values.put("type", product.getType());
-        db.insert("Product", null, values);
+        db.beginTransaction();
+        try {
+            ContentValues values = new ContentValues();
+            values.put("name", product.getName());
+            values.put("description", product.getDescription());
+            values.put("sellingPrice", product.getSellingPrice());
+            values.put("importPrice", product.getImportPrice());
+            values.put("stock", product.getStock());
+            values.put("type", product.getType());
+            db.insert("Product", null, values);
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
     }
 
     public List<Product> getAllProducts() {
         List<Product> productList = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM Product", null);
-        if (cursor.moveToFirst()) {
-            do {
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery("SELECT * FROM Product", null);
+            while (cursor.moveToNext()) {
                 @SuppressLint("Range") Product product = new Product(
                         cursor.getInt(cursor.getColumnIndexOrThrow("id")),
                         cursor.getString(cursor.getColumnIndexOrThrow("name")),
@@ -106,22 +131,56 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 product.setStock(cursor.getInt(cursor.getColumnIndexOrThrow("stock")));
                 product.setType(cursor.getString(cursor.getColumnIndexOrThrow("type")));
                 productList.add(product);
-            } while (cursor.moveToNext());
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
         }
-        cursor.close();
         return productList;
+    }
+
+    public Product getProductById(int productId) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = null;
+        try {
+            cursor = db.query("Product", null, "id = ?", new String[]{String.valueOf(productId)}, null, null, null);
+            if (cursor.moveToFirst()) {
+                @SuppressLint("Range") Product product = new Product(
+                        cursor.getInt(cursor.getColumnIndexOrThrow("id")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("name")),
+                        cursor.getDouble(cursor.getColumnIndexOrThrow("sellingPrice")),
+                        cursor.getDouble(cursor.getColumnIndexOrThrow("importPrice"))
+                );
+                product.setDescription(cursor.getString(cursor.getColumnIndexOrThrow("description")));
+                product.setStock(cursor.getInt(cursor.getColumnIndexOrThrow("stock")));
+                product.setType(cursor.getString(cursor.getColumnIndexOrThrow("type")));
+                return product;
+            }
+            return null;
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
     }
 
     public void updateProduct(Product product) {
         SQLiteDatabase db = getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("name", product.getName());
-        values.put("description", product.getDescription());
-        values.put("sellingPrice", product.getSellingPrice());
-        values.put("importPrice", product.getImportPrice());
-        values.put("stock", product.getStock());
-        values.put("type", product.getType());
-        db.update("Product", values, "id = ?", new String[]{String.valueOf(product.getId())});
+        db.beginTransaction();
+        try {
+            ContentValues values = new ContentValues();
+            values.put("name", product.getName());
+            values.put("description", product.getDescription());
+            values.put("sellingPrice", product.getSellingPrice());
+            values.put("importPrice", product.getImportPrice());
+            values.put("stock", product.getStock());
+            values.put("type", product.getType());
+            db.update("Product", values, "id = ?", new String[]{String.valueOf(product.getId())});
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
     }
 
     public void deleteProduct(int productId) {
@@ -177,77 +236,150 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    // Thống kê doanh thu theo tháng
+    // Methods for SaleActivity (Client role)
+    public long createOrder(String customerId, String date, List<OrderDetailItem> items) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            // Insert Order
+            ContentValues orderValues = new ContentValues();
+            orderValues.put("customerId", customerId);
+            orderValues.put("date", date);
+            double totalAmount = 0;
+            for (OrderDetailItem item : items) {
+                totalAmount += item.quantity * item.unitPrice;
+            }
+            orderValues.put("totalAmount", totalAmount);
+            long orderId = db.insert("'Order'", null, orderValues);
+
+            // Insert OrderDetails and update stock
+            for (OrderDetailItem item : items) {
+                // Insert OrderDetail
+                ContentValues detailValues = new ContentValues();
+                detailValues.put("orderId", orderId);
+                detailValues.put("productId", item.productId);
+                detailValues.put("quantity", item.quantity);
+                detailValues.put("unitPrice", item.unitPrice);
+                db.insert("OrderDetail", null, detailValues);
+
+                // Update stock
+                Product product = getProductById(item.productId);
+                if (product != null) {
+                    int newStock = product.getStock() - item.quantity;
+                    if (newStock < 0) {
+                        throw new IllegalStateException("Not enough stock for product ID: " + item.productId);
+                    }
+                    ContentValues stockValues = new ContentValues();
+                    stockValues.put("stock", newStock);
+                    db.update("Product", stockValues, "id = ?", new String[]{String.valueOf(item.productId)});
+                }
+            }
+
+            db.setTransactionSuccessful();
+            return orderId;
+        } catch (Exception e) {
+            Log.e("DatabaseHelper", "Error creating order: " + e.getMessage());
+            throw e;
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    // Helper class for OrderDetail items
+    public static class OrderDetailItem {
+        public int productId;
+        public int quantity;
+        public double unitPrice;
+
+        public OrderDetailItem(int productId, int quantity, double unitPrice) {
+            this.productId = productId;
+            this.quantity = quantity;
+            this.unitPrice = unitPrice;
+        }
+    }
+
+    // Statistics methods
     public List<RevenueStat> getMonthlyRevenue(String startDate, String endDate) {
         List<RevenueStat> stats = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = null;
+        try {
+            String query = "SELECT strftime('%Y-%m', o.date) as month, " +
+                    "SUM(od.quantity * od.unitPrice) as revenue " +
+                    "FROM 'Order' o JOIN OrderDetail od ON o.id = od.orderId ";
+            if (startDate != null && endDate != null) {
+                query += "WHERE o.date BETWEEN ? AND ? ";
+            }
+            query += "GROUP BY month ORDER BY month";
 
-        String query = "SELECT strftime('%Y-%m', o.date) as month, " +
-                "SUM(od.quantity * od.unitPrice) as revenue " +
-                "FROM 'Order' o JOIN OrderDetail od ON o.id = od.orderId ";
-        if (startDate != null && endDate != null) {
-            query += "WHERE o.date BETWEEN ? AND ? ";
+            cursor = startDate != null && endDate != null ?
+                    db.rawQuery(query, new String[]{startDate, endDate}) :
+                    db.rawQuery(query, null);
+
+            while (cursor.moveToNext()) {
+                stats.add(new RevenueStat(
+                        cursor.getString(0),
+                        cursor.getDouble(1)
+                ));
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
         }
-        query += "GROUP BY month ORDER BY month";
-
-        Cursor cursor = startDate != null && endDate != null ?
-                db.rawQuery(query, new String[]{startDate, endDate}) :
-                db.rawQuery(query, null);
-
-        while (cursor.moveToNext()) {
-            stats.add(new RevenueStat(
-                    cursor.getString(0),
-                    cursor.getDouble(1)
-            ));
-        }
-        cursor.close();
         return stats;
     }
 
-    // Thống kê sản phẩm bán chạy
     public List<ProductStat> getTopSellingProducts(int limit, String startDate, String endDate) {
         List<ProductStat> stats = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = null;
+        try {
+            String query = "SELECT p.id, p.name, SUM(od.quantity) as totalSold " +
+                    "FROM Product p JOIN OrderDetail od ON p.id = od.productId " +
+                    "JOIN 'Order' o ON od.orderId = o.id ";
+            if (startDate != null && endDate != null) {
+                query += "WHERE o.date BETWEEN ? AND ? ";
+            }
+            query += "GROUP BY p.id ORDER BY totalSold DESC LIMIT ?";
 
-        String query = "SELECT p.id, p.name, SUM(od.quantity) as totalSold " +
-                "FROM Product p JOIN OrderDetail od ON p.id = od.productId " +
-                "JOIN 'Order' o ON od.orderId = o.id ";
-        if (startDate != null && endDate != null) {
-            query += "WHERE o.date BETWEEN ? AND ? ";
+            cursor = startDate != null && endDate != null ?
+                    db.rawQuery(query, new String[]{startDate, endDate, String.valueOf(limit)}) :
+                    db.rawQuery(query, new String[]{String.valueOf(limit)});
+
+            while (cursor.moveToNext()) {
+                stats.add(new ProductStat(
+                        cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getInt(2)
+                ));
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
         }
-        query += "GROUP BY p.id ORDER BY totalSold DESC LIMIT ?";
-
-        Cursor cursor = startDate != null && endDate != null ?
-                db.rawQuery(query, new String[]{startDate, endDate, String.valueOf(limit)}) :
-                db.rawQuery(query, new String[]{String.valueOf(limit)});
-
-        while (cursor.moveToNext()) {
-            stats.add(new ProductStat(
-                    cursor.getInt(0),
-                    cursor.getString(1),
-                    cursor.getInt(2)
-            ));
-        }
-        cursor.close();
         return stats;
     }
 
-    // Thống kê tồn kho
     public List<InventoryStat> getInventoryStatus() {
         List<InventoryStat> stats = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-
-        String query = "SELECT id, name, stock FROM Product ORDER BY stock ASC";
-
-        Cursor cursor = db.rawQuery(query, null);
-        while (cursor.moveToNext()) {
-            stats.add(new InventoryStat(
-                    cursor.getInt(0),
-                    cursor.getString(1),
-                    cursor.getInt(2)
-            ));
+        Cursor cursor = null;
+        try {
+            cursor = db.query("Product", new String[]{"id", "name", "stock"}, null, null, null, null, "stock ASC");
+            while (cursor.moveToNext()) {
+                stats.add(new InventoryStat(
+                        cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getInt(2)
+                ));
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
         }
-        cursor.close();
         return stats;
     }
 }

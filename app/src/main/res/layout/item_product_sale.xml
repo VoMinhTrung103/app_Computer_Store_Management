@@ -44,6 +44,5 @@
         android:layout_height="wrap_content"
         android:hint="Số lượng"
         android:inputType="number"
-        android:visibility="gone"
         android:textSize="14sp"/>
 </LinearLayout>
