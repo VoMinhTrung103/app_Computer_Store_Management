@@ -34,8 +34,8 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
     holder.productNameTextView.setText(orderDetail.getProductName());
     holder.productIdTextView.setText("Product ID: " + orderDetail.getProductId());
     holder.quantityTextView.setText("Quantity: " + orderDetail.getQuantity());
-    holder.unitPriceTextView.setText("Unit Price: " + Utils.formatCurrency(orderDetail.getUnitPrice()) + " ₫");
-    holder.totalPriceTextView.setText("Total: " + Utils.formatCurrency(orderDetail.getQuantity() * orderDetail.getUnitPrice()) + " ₫");
+    holder.unitPriceTextView.setText("Unit Price: " + Utils.formatCurrency(orderDetail.getUnitPrice()));
+    holder.totalPriceTextView.setText("Total: " + Utils.formatCurrency(orderDetail.getQuantity() * orderDetail.getUnitPrice()));
 }
 
     @Override

@@ -35,7 +35,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     Order order = orderList.get(position);
     holder.orderIdTextView.setText("Order #" + order.getId());
     holder.orderDateTextView.setText("Date: " + order.getDate());
-    holder.orderTotalTextView.setText("Total: " + Utils.formatCurrency(order.getTotalAmount()) + " ₫");
+    holder.orderTotalTextView.setText("Total: " + Utils.formatCurrency(order.getTotalAmount()));
 
     holder.itemView.setOnClickListener(v -> {
         Intent intent = new Intent(context, OrderDetailActivity.class);
