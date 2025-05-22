@@ -397,7 +397,6 @@
                 android:layout_height="28dp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_home"
-                app:tint="#FF9800"
                 android:contentDescription="Home"/>
             <TextView
                 android:id="@+id/navHomeText"
@@ -424,7 +423,6 @@
                 android:layout_height="28dp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_shop"
-                app:tint="#BDBDBD"
                 android:contentDescription="Bag"/>
 
             <TextView
@@ -452,7 +450,6 @@
                 android:layout_height="28dp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_bag"
-                app:tint="#BDBDBD"
                 android:contentDescription="Chat"/>
             <TextView
                 android:id="@+id/navChatText"
@@ -479,7 +476,6 @@
                 android:layout_height="28dp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_profile"
-                app:tint="#BDBDBD"
                 android:contentDescription="Profile"/>
             <TextView
                 android:id="@+id/navProfileText"
