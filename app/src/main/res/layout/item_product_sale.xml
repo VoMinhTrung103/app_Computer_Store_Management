@@ -89,15 +89,19 @@
                 android:contentDescription="Decrease"
                 app:tint="#888888"/>
 
-            <TextView
-                android:id="@+id/quantityTextView"
-                android:layout_width="32dp"
+            <EditText
+                android:id="@+id/quantityInput"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="1"
+                android:hint="0"
+                android:inputType="number"
                 android:textSize="16sp"
                 android:textColor="#222222"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:maxLength="3"
+                android:padding="0dp"
+                android:background="@android:color/transparent"/>
 
             <ImageButton
                 android:id="@+id/btnIncrease"
