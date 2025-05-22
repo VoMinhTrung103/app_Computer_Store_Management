@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,7 +23,8 @@ import com.hcmus.app_computer_store_management.utils.Utils;
 public class SaleActivity extends AppCompatActivity implements ProductAdapter.OnSelectionChangedListener {
     private RecyclerView productRecyclerView;
     private ProductAdapter productAdapter;
-    private Button createOrderButton, backButton;
+    private Button createOrderButton;
+    private ImageButton backButton;
     private TextView totalAmountTextView;
     private DatabaseHelper dbHelper;
     private List<Product> selectedProducts;
@@ -65,7 +67,7 @@ public class SaleActivity extends AppCompatActivity implements ProductAdapter.On
             String quantityStr = quantityInput.getText().toString().trim();
 
             if (quantityStr.isEmpty()) {
-                Toast.makeText(this, "Vui lòng nhập số lượng cho sản phẩm " + product.getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Please enter quantity for product " + product.getName(), Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -73,17 +75,17 @@ public class SaleActivity extends AppCompatActivity implements ProductAdapter.On
             try {
                 quantity = Integer.parseInt(quantityStr);
             } catch (NumberFormatException e) {
-                Toast.makeText(this, "Số lượng không hợp lệ cho sản phẩm " + product.getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Invalid quantity for product " + product.getName(), Toast.LENGTH_SHORT).show();
                 return;
             }
 
             if (quantity <= 0) {
-                Toast.makeText(this, "Số lượng phải lớn hơn 0 cho sản phẩm " + product.getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Quantity must be greater than 0 for product " + product.getName(), Toast.LENGTH_SHORT).show();
                 return;
             }
 
             if (quantity > product.getStock()) {
-                Toast.makeText(this, "Không đủ hàng tồn kho cho sản phẩm " + product.getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Not enough stock for product " + product.getName(), Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -93,17 +95,18 @@ public class SaleActivity extends AppCompatActivity implements ProductAdapter.On
         }
 
         try {
-            // Sử dụng customerId = 1 (Customer 1) từ dữ liệu mẫu trong bảng Customer
-            long orderId = dbHelper.createOrder("1", "2025-05-21", orderDetails);
-            Toast.makeText(this, "Tạo đơn hàng thành công, ID: " + orderId, Toast.LENGTH_SHORT).show();
+            // Use customerId = 1 (Customer 1) from sample data in Customer table
+            String currentDate = new java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault()).format(new java.util.Date());
+            long orderId = dbHelper.createOrder("1", currentDate, orderDetails);
+            Toast.makeText(this, "Order created successfully, ID: " + orderId, Toast.LENGTH_SHORT).show();
             selectedProducts.clear();
             quantityInputs.clear();
             productAdapter.clearSelections();
-            totalAmountTextView.setText("Tổng tiền: 0 VNĐ");
+            totalAmountTextView.setText("Total: 0 VND");
             createOrderButton.setEnabled(false);
-            loadProducts(); // Làm mới danh sách để cập nhật số lượng tồn kho
+            loadProducts(); // Refresh list to update stock quantity
         } catch (Exception e) {
-            Toast.makeText(this, "Lỗi khi tạo đơn hàng: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error creating order: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
     @Override
@@ -169,7 +172,7 @@ public class SaleActivity extends AppCompatActivity implements ProductAdapter.On
             }
         }
 
-        totalAmountTextView.setText("Tổng tiền: " + Utils.formatCurrency(totalAmount));
+        totalAmountTextView.setText("Total: " + Utils.formatCurrency(totalAmount));
         createOrderButton.setEnabled(allValid && !selectedProducts.isEmpty());
     }
 }
