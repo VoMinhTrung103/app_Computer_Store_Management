@@ -32,16 +32,16 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
 
     @Override
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
-        Order order = orderList.get(position);
-        holder.orderIdTextView.setText("Đơn hàng #" + order.getId());
-        holder.orderDateTextView.setText("Ngày: " + order.getDate());
-        holder.orderTotalTextView.setText("Tổng tiền: " + Utils.formatCurrency(order.getTotalAmount()));
+    Order order = orderList.get(position);
+    holder.orderIdTextView.setText("Order #" + order.getId());
+    holder.orderDateTextView.setText("Date: " + order.getDate());
+    holder.orderTotalTextView.setText("Total: " + Utils.formatCurrency(order.getTotalAmount()) + " ₫");
 
-        holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, OrderDetailActivity.class);
-            intent.putExtra("ORDER", order);
-            context.startActivity(intent);
-        });
+    holder.itemView.setOnClickListener(v -> {
+        Intent intent = new Intent(context, OrderDetailActivity.class);
+        intent.putExtra("ORDER", order);
+        context.startActivity(intent);
+    });
     }
 
     @Override
