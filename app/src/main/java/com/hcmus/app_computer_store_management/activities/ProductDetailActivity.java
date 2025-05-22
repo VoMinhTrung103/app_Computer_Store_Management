@@ -77,7 +77,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             if (!isEditing) {
                 enableEditing(true);
                 // Khi chuyển sang chế độ edit, hiển thị giá dạng số không có định dạng
-                productPrice.setText(String.valueOf(product.getSellingPrice()));
+                productPriceEdit.setText(String.valueOf(product.getSellingPrice()));
                 productImportPrice.setText(String.valueOf(product.getImportPrice()));
             }
         });
@@ -110,9 +110,9 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private void enableEditing(boolean enable) {
         isEditing = enable;
-        productName.setEnabled(enable);
-        productDescription.setEnabled(enable);
-        productPrice.setEnabled(enable);
+        productNameEdit.setEnabled(enable);
+        productDescriptionEdit.setEnabled(enable);
+        productPriceEdit.setEnabled(enable);
         productImportPrice.setEnabled(enable);
         productStock.setEnabled(enable);
         productType.setEnabled(enable);

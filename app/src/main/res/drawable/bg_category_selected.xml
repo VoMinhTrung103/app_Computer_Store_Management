@@ -1,0 +1,5 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#FFFFF3E0"/> <!-- Cam nhạt -->
+    <corners android:radius="18dp"/>
+    <stroke android:width="2dp" android:color="#FFFF9800"/>
+</shape>
