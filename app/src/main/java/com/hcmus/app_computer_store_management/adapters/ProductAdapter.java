@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,7 +47,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_product_sale, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_product, parent, false);
         return new ProductViewHolder(view);
     }
 
@@ -58,7 +59,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.productStockTextView.setText("Tồn kho: " + product.getStock());
 
         if (isSaleMode) {
-            holder.checkboxSelect.setVisibility(View.GONE);
+            holder.checkboxSelect.setVisibility(View.VISIBLE);
+            holder.quantityInput.setVisibility(View.VISIBLE);
+            holder.btnIncrease.setVisibility(View.VISIBLE);
+            holder.btnDecrease.setVisibility(View.VISIBLE);
             holder.quantityInput.setVisibility(View.VISIBLE);
 
             // Giữ lại số lượng đã nhập khi scroll
@@ -102,7 +106,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 });
         } else {
             holder.checkboxSelect.setVisibility(View.VISIBLE);
-            holder.quantityInput.setVisibility(View.GONE);
+            holder.btnIncrease.setVisibility(View.GONE);         // Ẩn nút tăng
+            holder.btnDecrease.setVisibility(View.GONE);         // Ẩn nút giảm
+            holder.quantityInput.setVisibility(View.GONE);       // Ẩn input số lượng
+            holder.btnDelete.setVisibility(View.VISIBLE);
 
             holder.checkboxSelect.setOnCheckedChangeListener(null);
             holder.checkboxSelect.setChecked(selectedProductIds.contains(product.getId()));
@@ -159,6 +166,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         TextView productNameTextView, productPriceTextView, productStockTextView;
         CheckBox checkboxSelect;
         EditText quantityInput;
+        ImageButton btnIncrease, btnDecrease, btnDelete;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -167,6 +175,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             productStockTextView = itemView.findViewById(R.id.productStockTextView);
             checkboxSelect = itemView.findViewById(R.id.checkboxSelect);
             quantityInput = itemView.findViewById(R.id.quantityInput);
+            btnIncrease = itemView.findViewById(R.id.btnIncrease);   // <-- Thêm dòng này
+            btnDecrease = itemView.findViewById(R.id.btnDecrease);   // <-- Thêm dòng này
+            btnDelete = itemView.findViewById(R.id.btnDelete);
         }
     }
 }

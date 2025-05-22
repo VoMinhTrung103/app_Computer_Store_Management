@@ -11,7 +11,9 @@ import com.hcmus.app_computer_store_management.models.Order;
 import com.hcmus.app_computer_store_management.models.OrderDetail;
 import com.hcmus.app_computer_store_management.R;
 import com.hcmus.app_computer_store_management.adapters.OrderDetailAdapter;
+import com.hcmus.app_computer_store_management.utils.Utils;
 import java.util.List;
+
 
 public class OrderDetailActivity extends AppCompatActivity {
     private TextView orderId, orderDate, customerId, totalAmount;
@@ -32,14 +34,14 @@ public class OrderDetailActivity extends AppCompatActivity {
         backButton = findViewById(R.id.backButton);
         dbHelper = new DatabaseHelper(this);
 
-        Order order = (Order) getIntent().getSerializableExtra("ORDER");
-        if (order != null) {
-            orderId.setText("Mã đơn: " + order.getId());
-            orderDate.setText("Ngày: " + order.getDate());
-            customerId.setText("Khách hàng ID: " + order.getCustomerId());
-            totalAmount.setText("Tổng tiền: " + order.getTotalAmount());
-            loadOrderDetails(order.getId());
-        }
+Order order = (Order) getIntent().getSerializableExtra("ORDER");
+if (order != null) {
+    orderId.setText("Order ID: " + order.getId());
+    orderDate.setText("Date: " + order.getDate());
+    customerId.setText("Customer ID: " + order.getCustomerId());
+    totalAmount.setText("Total: " + Utils.formatCurrency(order.getTotalAmount()));
+    loadOrderDetails(order.getId());
+}
 
         backButton.setOnClickListener(v -> finish());
     }

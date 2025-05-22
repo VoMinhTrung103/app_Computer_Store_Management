@@ -30,12 +30,13 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull OrderDetailViewHolder holder, int position) {
-        OrderDetail orderDetail = orderDetailList.get(position);
-        holder.productIdTextView.setText("Mã sản phẩm: " + orderDetail.getProductId());
-        holder.quantityTextView.setText("Số lượng: " + orderDetail.getQuantity());
-        holder.unitPriceTextView.setText("Đơn giá: " + Utils.formatCurrency(orderDetail.getUnitPrice()));
-        holder.totalPriceTextView.setText("Thành tiền: " + Utils.formatCurrency(orderDetail.getQuantity() * orderDetail.getUnitPrice()));
-    }
+    OrderDetail orderDetail = orderDetailList.get(position);
+    holder.productNameTextView.setText(orderDetail.getProductName());
+    holder.productIdTextView.setText("Product ID: " + orderDetail.getProductId());
+    holder.quantityTextView.setText("Quantity: " + orderDetail.getQuantity());
+    holder.unitPriceTextView.setText("Unit Price: " + Utils.formatCurrency(orderDetail.getUnitPrice()) + " ₫");
+    holder.totalPriceTextView.setText("Total: " + Utils.formatCurrency(orderDetail.getQuantity() * orderDetail.getUnitPrice()) + " ₫");
+}
 
     @Override
     public int getItemCount() {
@@ -43,14 +44,15 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
     }
 
     static class OrderDetailViewHolder extends RecyclerView.ViewHolder {
-        TextView productIdTextView, quantityTextView, unitPriceTextView, totalPriceTextView;
+    TextView productNameTextView, productIdTextView, quantityTextView, unitPriceTextView, totalPriceTextView;
 
-        public OrderDetailViewHolder(@NonNull View itemView) {
-            super(itemView);
-            productIdTextView = itemView.findViewById(R.id.productIdTextView);
-            quantityTextView = itemView.findViewById(R.id.quantityTextView);
-            unitPriceTextView = itemView.findViewById(R.id.unitPriceTextView);
-            totalPriceTextView = itemView.findViewById(R.id.totalPriceTextView);
-        }
+    public OrderDetailViewHolder(@NonNull View itemView) {
+        super(itemView);
+        productNameTextView = itemView.findViewById(R.id.productNameTextView);
+        productIdTextView = itemView.findViewById(R.id.productIdTextView);
+        quantityTextView = itemView.findViewById(R.id.quantityTextView);
+        unitPriceTextView = itemView.findViewById(R.id.unitPriceTextView);
+        totalPriceTextView = itemView.findViewById(R.id.totalPriceTextView);
+    }
     }
 }

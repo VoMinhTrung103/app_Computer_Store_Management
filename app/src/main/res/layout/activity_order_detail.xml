@@ -1,55 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="#F5F5F5"
     android:padding="16dp">
 
+    <!-- Title -->
     <TextView
+        android:id="@+id/titleText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Chi Tiết Đơn Hàng"
+        android:text="Order Details"
         android:textSize="24sp"
         android:textStyle="bold"
         android:gravity="center"
-        android:layout_marginBottom="16dp"/>
+        android:textColor="#333"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="8dp"/>
 
-    <TextView
-        android:id="@+id/orderId"
-        android:layout_width="wrap_content"
+    <!-- Order Info -->
+    <LinearLayout
+        android:id="@+id/orderInfoLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"/>
+        android:orientation="vertical"
+        android:background="#FFF"
+        android:elevation="2dp"
+        android:padding="12dp"
+        android:layout_below="@id/titleText"
+        android:layout_marginBottom="8dp">
 
-    <TextView
-        android:id="@+id/orderDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"/>
+        <TextView
+            android:id="@+id/orderId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#222"/>
 
-    <TextView
-        android:id="@+id/customerId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"/>
+        <TextView
+            android:id="@+id/orderDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#222"/>
 
-    <TextView
-        android:id="@+id/totalAmount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginBottom="16dp"/>
+        <TextView
+            android:id="@+id/customerId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#222"/>
 
+        <TextView
+            android:id="@+id/totalAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#FF9800"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+    </LinearLayout>
+
+    <!-- Order Details List -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/orderDetailsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginBottom="16dp"/>
+        android:layout_below="@id/orderInfoLayout"
+        android:layout_above="@+id/backButton"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="4dp"/>
 
+    <!-- Back Button -->
     <Button
         android:id="@+id/backButton"
-        android:background="@drawable/button_orange_rounded"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Quay Lại"/>
-</LinearLayout>
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:text="Back"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button_orange_rounded"
+        android:elevation="4dp"/>
+</RelativeLayout>

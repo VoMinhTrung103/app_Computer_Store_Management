@@ -7,6 +7,13 @@ public class OrderDetail implements Serializable {
     private int productId;
     private int quantity;
     private double unitPrice;
+    private String productName;
+    public String getProductName() {
+    return productName;
+}
+public void setProductName(String productName) {
+    this.productName = productName;
+}
 
     public OrderDetail(int orderId, int productId, int quantity, double unitPrice) {
         this.orderId = orderId;
