@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="240dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/sample_burger"
+            android:src="@drawable/banner_detail"
             android:contentDescription="Product Image" />
 
         <!-- CardView hoặc LinearLayout bo góc -->
@@ -32,7 +32,7 @@
                 android:id="@+id/productName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Burger With Meat 🍔"
+                android:text="Macbook Pro 16"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 android:textColor="#222"
@@ -43,7 +43,7 @@
                 android:id="@+id/productPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="$ 12,230"
+                android:text="$ 3,000"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="#FF9800"
@@ -65,7 +65,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" Free Delivery"
+                    android:text=" Bảo hành 1 năm"
                     android:textColor="#888"
                     android:textSize="14sp"
                     android:layout_marginEnd="16dp"/>
@@ -78,22 +78,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" 20 - 30"
+                    android:text=" 1 đổi 1 trong vòng 14 ngày"
                     android:textColor="#888"
                     android:textSize="14sp"
                     android:layout_marginEnd="16dp"/>
-
-                <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:src="@drawable/ic_star"
-                    app:tint="#FF9800"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" 4.5"
-                    android:textColor="#888"
-                    android:textSize="14sp"/>
             </LinearLayout>
 
             <!-- Description Title -->
@@ -115,62 +103,6 @@
                 android:textColor="#888"
                 android:textSize="14sp"
                 android:layout_marginBottom="20dp"/>
-
-            <!-- Quantity and Total Row -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="20dp">
-
-                <!-- Quantity -->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-
-                    <ImageButton
-                        android:id="@+id/btnMinus"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:background="@android:color/transparent"
-                        android:src="@drawable/ic_remove"
-                        android:contentDescription="Minus"/>
-                    <TextView
-                        android:layout_width="32dp"
-                        android:layout_height="wrap_content"
-                        android:text="4"
-                        android:textSize="18sp"
-                        android:textColor="#222"
-                        android:gravity="center"/>
-                    <ImageButton
-                        android:id="@+id/btnPlus"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:background="@android:color/transparent"
-                        android:src="@drawable/ic_add"
-                        android:contentDescription="Plus"/>
-                </LinearLayout>
-
-                <!-- View giãn cách -->
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
-                <!-- Total Price -->
-                <TextView
-                    android:id="@+id/tvTotalPrice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="$ 24,460"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="#FF9800"
-                    android:layout_gravity="end"/>
-            </LinearLayout>
 
             <!-- Add to Cart Button -->
             <LinearLayout
