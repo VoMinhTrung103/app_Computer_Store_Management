@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Product Image -->
+        <ImageView
+            android:id="@+id/productImage"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/sample_burger"
+            android:contentDescription="Product Image" />
+
+        <!-- CardView hoặc LinearLayout bo góc -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/top_rounded_white_bg"
+            android:padding="24dp"
+            android:layout_marginTop="-32dp">
+
+            <!-- Product Name -->
+            <TextView
+                android:id="@+id/productName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Burger With Meat 🍔"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="#222"
+                android:layout_marginBottom="4dp"/>
+
+            <!-- Product Price -->
+            <TextView
+                android:id="@+id/productPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$ 12,230"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#FF9800"
+                android:layout_marginBottom="12dp"/>
+
+            <!-- Info Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/ic_free"
+                    android:tint="#FF9800"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" Free Delivery"
+                    android:textColor="#888"
+                    android:textSize="14sp"
+                    android:layout_marginEnd="16dp"/>
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/ic_time"
+                    android:tint="#FF9800"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" 20 - 30"
+                    android:textColor="#888"
+                    android:textSize="14sp"
+                    android:layout_marginEnd="16dp"/>
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/ic_star"
+                    android:tint="#FF9800"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" 4.5"
+                    android:textColor="#888"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+            <!-- Description Title -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description"
+                android:textStyle="bold"
+                android:textColor="#222"
+                android:textSize="16sp"
+                android:layout_marginBottom="4dp"/>
+
+            <!-- Description Content -->
+            <TextView
+                android:id="@+id/productDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Burger With Meat is a typical food from our restaurant that is much in demand by many people, this is very recommended for you."
+                android:textColor="#888"
+                android:textSize="14sp"
+                android:layout_marginBottom="20dp"/>
+
+            <!-- Quantity and Total Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="20dp">
+
+                <!-- Quantity -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageButton
+                        android:id="@+id/btnMinus"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_remove"
+                        android:contentDescription="Minus"/>
+                    <TextView
+                        android:id="@+id/tvQuantity"
+                        android:layout_width="32dp"
+                        android:layout_height="wrap_content"
+                        android:text="4"
+                        android:textSize="18sp"
+                        android:textColor="#222"
+                        android:gravity="center"/>
+                    <ImageButton
+                        android:id="@+id/btnPlus"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_add"
+                        android:contentDescription="Plus"/>
+                </LinearLayout>
+
+                <!-- View giãn cách -->
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <!-- Total Price -->
+                <TextView
+                    android:id="@+id/tvTotalPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$ 24,460"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="#FF9800"
+                    android:layout_gravity="end"/>
+            </LinearLayout>
+
+            <!-- Add to Cart Button -->
+            <LinearLayout
+                android:id="@+id/btnAddToCart"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:background="@drawable/button_orange_rounded"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_cart"
+                    android:tint="#FFF"
+                    android:layout_marginEnd="8dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add to Cart"
+                    android:textColor="#FFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

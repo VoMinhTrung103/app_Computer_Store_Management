@@ -5,6 +5,17 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+
+    <!-- Product Name -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chi tiết sản phẩm 🖥"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="#222"
+        android:layout_marginBottom="4dp"/>
+
     <EditText
         android:id="@+id/productName"
         android:layout_width="match_parent"
@@ -60,12 +71,15 @@
             android:id="@+id/backButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_orange_rounded"
+            android:layout_marginEnd="12dp"
             android:text="Back" />
 
         <Button
             android:id="@+id/editButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_orange_rounded"
             android:text="Edit" />
 
         <Button

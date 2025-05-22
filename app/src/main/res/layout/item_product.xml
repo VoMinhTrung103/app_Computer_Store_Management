@@ -1,49 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="8dp">
-
-    <CheckBox
-        android:id="@+id/checkboxSelect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"/>
+    android:layout_margin="8dp"
+    card_view:cardCornerRadius="12dp"
+    card_view:cardElevation="4dp"
+    card_view:cardBackgroundColor="#CCFFFFFF"> <!-- Thêm background mờ (80% trắng) -->
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_weight="3"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:gravity="center_horizontal">
 
+        <!-- CheckBox với margin để cách xa mép phải -->
+        <CheckBox
+            android:id="@+id/checkboxSelect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="8dp"
+            android:visibility="gone"/>
+
+        <!-- Tên sản phẩm -->
         <TextView
             android:id="@+id/productNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"/>
+            android:text="Product Name"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"/>
 
+        <!-- Giá sản phẩm -->
         <TextView
             android:id="@+id/productPriceTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"/>
+            android:text="$9.99"
+            android:textSize="14sp"
+            android:textColor="#666"
+            android:layout_marginTop="4dp"/>
 
+        <!-- Tồn kho hoặc đơn vị -->
         <TextView
             android:id="@+id/productStockTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"/>
+            android:text="4 pcs"
+            android:textSize="14sp"
+            android:textColor="#999"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Ô nhập số lượng (ẩn mặc định) -->
+        <EditText
+            android:id="@+id/quantityInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Số lượng"
+            android:inputType="number"
+            android:textSize="14sp"
+            android:visibility="gone"/>
 
     </LinearLayout>
-
-    <EditText
-        android:id="@+id/quantityInput"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:hint="Số lượng"
-        android:inputType="number"
-        android:visibility="gone"
-        android:textSize="14sp"/>
-</LinearLayout>
+</androidx.cardview.widget.CardView>

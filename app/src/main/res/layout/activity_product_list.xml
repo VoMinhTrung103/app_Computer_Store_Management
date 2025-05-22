@@ -1,52 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="#F5F5F5"
     android:padding="16dp">
 
+    <!-- Tiêu đề -->
     <TextView
+        android:id="@+id/titleText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Danh Sách Sản Phẩm"
         android:textSize="24sp"
         android:textStyle="bold"
         android:gravity="center"
-        android:layout_marginBottom="16dp"/>
+        android:textColor="#333"
+        android:layout_marginBottom="8dp"
+        android:layout_alignParentTop="true"/>
 
+    <!-- Danh sách sản phẩm -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/productRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginBottom="16dp"/>
+        android:layout_above="@+id/bottomButtons"
+        android:layout_below="@+id/titleText"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"/>
 
+    <!-- Thanh nút dưới cùng -->
     <LinearLayout
+        android:id="@+id/bottomButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:background="#E0F2F1"
+        android:padding="12dp"
+        android:elevation="4dp">
 
         <Button
             android:id="@+id/backButton"
             android:layout_width="0dp"
+            android:layout_height="50dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
             android:text="Quay Lại"
-            android:layout_marginEnd="8dp"/>
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#26A69A"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/rounded_button"/>
 
         <Button
             android:id="@+id/addProductButton"
             android:layout_width="0dp"
+            android:layout_height="50dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Thêm Sản Phẩm"
-            android:layout_marginEnd="8dp"/>
+            android:text="Thêm"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#26A69A"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
+            android:background="@drawable/rounded_button"/>
 
         <Button
             android:id="@+id/deleteProductButton"
             android:layout_width="0dp"
+            android:layout_height="50dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Xóa Sản Phẩm"/>
+            android:text="Xóa"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#26A69A"
+            android:layout_marginStart="4dp"
+            android:background="@drawable/rounded_button"/>
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

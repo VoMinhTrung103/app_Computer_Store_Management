@@ -1,34 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:background="#F5F5F5">
 
+    <!-- Tiêu đề phía trên -->
     <TextView
+        android:id="@+id/titleText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Admin Dashboard"
         android:textSize="24sp"
         android:textStyle="bold"
         android:gravity="center"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp"
+        android:textColor="#333"/>
 
-    <Button
-        android:id="@+id/statisticsButton"
+    <!-- Thanh nút ở dưới cùng -->
+    <LinearLayout
+        android:id="@+id/bottomButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Xem Thống Kê"/>
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:background="#E0F2F1"
+        android:padding="12dp"
+        android:elevation="4dp">
 
-    <Button
-        android:id="@+id/productListButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Quản Lý Sản Phẩm"/>
+        <Button
+            android:id="@+id/statisticsButton"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="Thống Kê"
+            android:textColor="#FFFFFF"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/button_orange_rounded"/>
 
-    <Button
-        android:id="@+id/logoutButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Đăng Xuất"/>
-</LinearLayout>
+        <Button
+            android:id="@+id/productListButton"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="QL Sản Phẩm"
+            android:textColor="#FFFFFF"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
+            android:background="@drawable/button_orange_rounded"/>
+
+        <Button
+            android:id="@+id/logoutButton"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="Đăng Xuất"
+            android:textColor="#FFFFFF"
+            android:layout_marginStart="4dp"
+            android:background="@drawable/button_orange_rounded"/>
+    </LinearLayout>
+</RelativeLayout>

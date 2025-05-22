@@ -1,39 +1,205 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:gravity="center">
+    android:background="#FFF">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Đăng Nhập"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:layout_marginBottom="32dp"/>
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center_horizontal">
 
-    <EditText
-        android:id="@+id/emailEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:layout_marginBottom="16dp"/>
+        <!-- Title -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Login to your account."
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#222"
+            android:gravity="start"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="8dp"/>
 
-    <EditText
-        android:id="@+id/passwordEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Mật Khẩu"
-        android:inputType="textPassword"
-        android:layout_marginBottom="16dp"/>
+        <!-- Subtitle -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Please sign in to your account"
+            android:textSize="14sp"
+            android:textColor="#888"
+            android:gravity="start"
+            android:layout_marginBottom="24dp"/>
 
-    <Button
-        android:id="@+id/loginButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Đăng Nhập"/>
-</LinearLayout>
+        <!-- Email -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email Address"
+            android:textSize="14sp"
+            android:textColor="#222"
+            android:layout_marginBottom="4dp"/>
+
+        <EditText
+            android:id="@+id/emailEditText"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Enter Email"
+            android:inputType="textEmailAddress"
+            android:background="@drawable/edittext_bg"
+            android:padding="12dp"
+            android:textColor="#222"
+            android:textColorHint="#AAA"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Password -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Password"
+            android:textSize="14sp"
+            android:textColor="#222"
+            android:layout_marginBottom="4dp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="4dp">
+
+            <EditText
+                android:id="@+id/passwordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:background="@drawable/edittext_bg"
+                android:padding="12dp"
+                android:textColor="#222"
+                android:textColorHint="#AAA"/>
+
+            <!-- Eye icon placeholder, add logic in code -->
+            <ImageView
+                android:id="@+id/passwordToggle"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_eye"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:padding="4dp"
+                android:layout_marginEnd="4dp"
+                android:contentDescription="Show/Hide Password"/>
+        </RelativeLayout>
+
+        <!-- Forgot password -->
+        <TextView
+            android:id="@+id/forgotPasswordText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Forgot password?"
+            android:textColor="#53B175"
+            android:textSize="14sp"
+            android:layout_gravity="end"
+            android:layout_marginBottom="24dp"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <!-- Sign In Button -->
+        <Button
+            android:id="@+id/loginButton"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Sign In"
+            android:textAllCaps="false"
+            android:textColor="#FFF"
+            android:background="@drawable/button_orange_rounded"
+            android:textSize="16sp"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Divider -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="16dp">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="#DDD"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  Or sign in with  "
+                android:textColor="#888"
+                android:textSize="14sp"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="#DDD"/>
+        </LinearLayout>
+
+        <!-- Social Buttons -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="24dp">
+
+            <ImageButton
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/social_btn_bg"
+                android:src="@drawable/ic_google"
+                android:contentDescription="Google"
+                android:layout_marginEnd="16dp"/>
+
+            <ImageButton
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/social_btn_bg"
+                android:src="@drawable/ic_facebook"
+                android:contentDescription="Facebook"
+                android:layout_marginEnd="16dp"/>
+
+            <ImageButton
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/social_btn_bg"
+                android:src="@drawable/ic_apple"
+                android:contentDescription="Apple"/>
+        </LinearLayout>
+
+        <!-- Register -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Don't have an account? "
+                android:textColor="#888"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/registerText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Register"
+                android:textColor="#53B175"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:clickable="true"
+                android:focusable="true"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

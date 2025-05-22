@@ -48,6 +48,7 @@
 
     <Button
         android:id="@+id/backButton"
+        android:background="@drawable/button_orange_rounded"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Quay Lại"/>
