@@ -31,6 +31,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public interface OnSelectionChangedListener {
         void onSelectionChanged(boolean hasSelections);
     }
+    public interface OnProductClickListener {
+        void onProductClick(Product product);
+    }
 
     public ProductAdapter(Context context, List<Product> productList, OnSelectionChangedListener listener, boolean isSaleMode) {
         this.context = context;
@@ -90,8 +93,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                     }
                 }
             });
-
-            holder.itemView.setOnClickListener(v -> holder.quantityInput.requestFocus());
+                // Chỉ gán 1 lần sự kiện click để xem chi tiết sản phẩm
+                holder.itemView.setOnClickListener(v -> {
+                    Intent intent = new Intent(context, ProductDetailActivity.class);
+                    intent.putExtra("PRODUCT", product);
+                    intent.putExtra("FOR_EMPLOYEE", true);
+                    context.startActivity(intent);
+                });
         } else {
             holder.checkboxSelect.setVisibility(View.VISIBLE);
             holder.quantityInput.setVisibility(View.GONE);
