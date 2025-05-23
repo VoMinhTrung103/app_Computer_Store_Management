@@ -413,14 +413,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = null;
         try {
-            cursor = db.query("OrderDetail", null, "orderId = ?", new String[]{String.valueOf(orderId)}, null, null, null);
+            String query = "SELECT od.orderId, od.productId, od.quantity, od.unitPrice, p.name AS productName " +
+                    "FROM OrderDetail od " +
+                    "JOIN Product p ON od.productId = p.id " +
+                    "WHERE od.orderId = ?";
+            cursor = db.rawQuery(query, new String[]{String.valueOf(orderId)});
             while (cursor.moveToNext()) {
-                @SuppressLint("Range") OrderDetail orderDetail = new OrderDetail(
+                OrderDetail orderDetail = new OrderDetail(
                         cursor.getInt(cursor.getColumnIndexOrThrow("orderId")),
                         cursor.getInt(cursor.getColumnIndexOrThrow("productId")),
                         cursor.getInt(cursor.getColumnIndexOrThrow("quantity")),
                         cursor.getDouble(cursor.getColumnIndexOrThrow("unitPrice"))
                 );
+                orderDetail.setProductName(cursor.getString(cursor.getColumnIndexOrThrow("productName")));
                 orderDetails.add(orderDetail);
             }
         } finally {
