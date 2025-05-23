@@ -5,12 +5,11 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-
     <!-- Product Name -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Chi tiết sản phẩm 🖥"
+        android:text="Product Details 🖥"
         android:textSize="22sp"
         android:textStyle="bold"
         android:textColor="#222"
@@ -20,21 +19,21 @@
         android:id="@+id/productName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Tên sản phẩm"
+        android:hint="Product Name"
         android:enabled="false" />
 
     <EditText
         android:id="@+id/productDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Mô tả"
+        android:hint="Description"
         android:enabled="false" />
 
     <EditText
         android:id="@+id/productPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Giá bán"
+        android:hint="Selling Price"
         android:inputType="numberDecimal"
         android:enabled="false" />
 
@@ -42,7 +41,7 @@
         android:id="@+id/productImportPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Giá nhập"
+        android:hint="Import Price"
         android:inputType="numberDecimal"
         android:enabled="false" />
 
@@ -50,7 +49,7 @@
         android:id="@+id/productStock"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Tồn kho"
+        android:hint="Stock"
         android:inputType="number"
         android:enabled="false" />
 
@@ -58,7 +57,7 @@
         android:id="@+id/productType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Loại sản phẩm"
+        android:hint="Product Type"
         android:enabled="false" />
 
     <LinearLayout

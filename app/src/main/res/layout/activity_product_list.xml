@@ -5,12 +5,12 @@
     android:background="#F5F5F5"
     android:padding="16dp">
 
-    <!-- Tiêu đề -->
+    <!-- Title -->
     <TextView
         android:id="@+id/titleText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Danh Sách Sản Phẩm"
+        android:text="Product List"
         android:textSize="24sp"
         android:textStyle="bold"
         android:gravity="center"
@@ -18,7 +18,7 @@
         android:layout_marginBottom="8dp"
         android:layout_alignParentTop="true"/>
 
-    <!-- Danh sách sản phẩm -->
+    <!-- Product List -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/productRecyclerView"
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"/>
 
-    <!-- Thanh nút dưới cùng -->
+    <!-- Bottom Buttons Bar -->
     <LinearLayout
         android:id="@+id/bottomButtons"
         android:layout_width="match_parent"
@@ -45,7 +45,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:text="Quay Lại"
+            android:text="Back"
             android:textColor="#FFFFFF"
             android:backgroundTint="#26A69A"
             android:layout_marginEnd="4dp"
@@ -56,7 +56,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:text="Thêm"
+            android:text="Add"
             android:textColor="#FFFFFF"
             android:backgroundTint="#26A69A"
             android:layout_marginStart="2dp"
@@ -68,7 +68,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:text="Xóa"
+            android:text="Delete"
             android:textColor="#FFFFFF"
             android:backgroundTint="#26A69A"
             android:layout_marginStart="4dp"

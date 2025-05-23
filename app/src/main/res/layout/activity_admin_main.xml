@@ -1,63 +1,311 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F5F5F5">
 
-    <!-- Tiêu đề phía trên -->
-    <TextView
-        android:id="@+id/titleText"
+    <!-- Nội dung cuộn -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Admin Dashboard"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="16dp"
-        android:textColor="#333"/>
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:paddingBottom="86dp">
 
-    <!-- Thanh nút ở dưới cùng -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Top Title -->
+            <TextView
+                android:id="@+id/titleText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Admin Dashboard"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
+                android:textColor="#333" />
+
+            <!-- Summary Cards -->
+            <LinearLayout
+                android:id="@+id/summaryLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/titleText"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:background="#FFFFFF"
+                    android:layout_margin="4dp"
+                    android:gravity="center"
+                    android:elevation="2dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Customers"
+                        android:textStyle="bold"
+                        android:textColor="#333"
+                        android:textSize="14sp"
+                        android:gravity="center" />
+                    <TextView
+                        android:id="@+id/tvTotalCustomers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="#1976D2"
+                        android:gravity="center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:background="#FFFFFF"
+                    android:layout_margin="4dp"
+                    android:gravity="center"
+                    android:elevation="2dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Products"
+                        android:textStyle="bold"
+                        android:textColor="#333"
+                        android:textSize="14sp"
+                        android:gravity="center" />
+                    <TextView
+                        android:id="@+id/tvTotalProducts"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="#388E3C"
+                        android:gravity="center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:background="#FFFFFF"
+                    android:layout_margin="4dp"
+                    android:gravity="center"
+                    android:elevation="2dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Orders"
+                        android:textStyle="bold"
+                        android:textColor="#333"
+                        android:textSize="14sp"
+                        android:gravity="center" />
+                    <TextView
+                        android:id="@+id/tvTotalOrders"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="#F57C00"
+                        android:gravity="center" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Inventory Summary -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/summaryLayout"
+                android:layout_margin="8dp"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:background="#FFFFFF"
+                    android:layout_margin="4dp"
+                    android:gravity="center"
+                    android:elevation="2dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Inventory"
+                        android:textStyle="bold"
+                        android:textColor="#333"
+                        android:textSize="14sp"
+                        android:gravity="center" />
+                    <TextView
+                        android:id="@+id/tvTotalInventory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="#7B1FA2"
+                        android:gravity="center" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Low Stock Products -->
+            <TextView
+                android:id="@+id/tvLowStockTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/summaryLayout"
+                android:layout_marginTop="120dp"
+                android:layout_marginStart="16dp"
+                android:text="Low Stock Products"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="#D32F2F" />
+
+            <ListView
+                android:id="@+id/lvLowStock"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_below="@id/tvLowStockTitle"
+                android:layout_margin="8dp"
+                android:divider="#BDBDBD"
+                android:dividerHeight="1dp" />
+
+<!-- Chart Title -->
+<TextView
+    android:id="@+id/tvChartTitle"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/lvLowStock"
+    android:layout_marginTop="16dp"
+    android:layout_marginStart="16dp"
+    android:text="Sales Chart"
+    android:textStyle="bold"
+    android:textSize="16sp"
+    android:textColor="#1976D2" />
+
+<!-- Sales Chart Image -->
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:layout_below="@id/tvChartTitle"
+    android:layout_margin="16dp"
+    android:src="@drawable/salechart"
+    android:scaleType="fitCenter"
+    android:contentDescription="Sales Chart" />
+
+<!-- Chart Container (Placeholder) -->
+<!-- <FrameLayout
+    android:id="@+id/chartContainer"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:layout_below="@+id/saleChartImage"
+    android:layout_margin="16dp"
+    android:background="#FFF"
+    android:elevation="2dp"
+    tools:ignore="UnknownId" /> -->
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <!-- Bottom Navigation Bar (Cố định, không cuộn) -->
     <LinearLayout
-        android:id="@+id/bottomButtons"
+        android:id="@+id/bottomNavBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_height="70dp"
+        android:layout_gravity="bottom"
         android:orientation="horizontal"
-        android:weightSum="3"
         android:background="#E0F2F1"
-        android:padding="12dp"
-        android:elevation="4dp">
+        android:elevation="8dp"
+        android:weightSum="3">
 
-        <Button
-            android:id="@+id/statisticsButton"
+        <!-- Statistics -->
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Thống Kê"
-            android:textColor="#FFFFFF"
-            android:layout_marginEnd="4dp"
-            android:background="@drawable/button_orange_rounded"/>
+            android:orientation="vertical"
+            android:gravity="center">
 
-        <Button
-            android:id="@+id/productListButton"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:text="QL Sản Phẩm"
-            android:textColor="#FFFFFF"
-            android:layout_marginStart="2dp"
-            android:layout_marginEnd="2dp"
-            android:background="@drawable/button_orange_rounded"/>
+            <ImageButton
+                android:id="@+id/statisticsButton"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_chart"
+                android:contentDescription="Statistics"
+                android:scaleType="centerInside"
+                android:padding="8dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Statistics"
+                android:textColor="#333"
+                android:textSize="12sp" />
+        </LinearLayout>
 
-        <Button
-            android:id="@+id/logoutButton"
+        <!-- Products -->
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Đăng Xuất"
-            android:textColor="#FFFFFF"
-            android:layout_marginStart="4dp"
-            android:background="@drawable/button_orange_rounded"/>
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/productListButton"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_edit"
+                android:contentDescription="Products"
+                android:scaleType="centerInside"
+                android:padding="8dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Products"
+                android:textColor="#333"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- Logout -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/logoutButton"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_logout"
+                android:contentDescription="Logout"
+                android:scaleType="centerInside"
+                android:padding="8dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Logout"
+                android:textColor="#333"
+                android:textSize="12sp" />
+        </LinearLayout>
     </LinearLayout>
-</RelativeLayout>
+</FrameLayout>

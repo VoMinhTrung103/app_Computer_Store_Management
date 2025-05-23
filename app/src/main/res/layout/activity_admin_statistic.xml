@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Thống Kê (Admin)"
+        android:text="Statistics (Admin)"
         android:textSize="24sp"
         android:textStyle="bold"
         android:gravity="center"
@@ -18,7 +18,7 @@
         android:id="@+id/filterTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Chọn khoảng thời gian"
+        android:text="Select Time Range"
         android:textSize="16sp"
         android:layout_marginBottom="8dp"/>
 
@@ -26,13 +26,13 @@
         android:id="@+id/filterButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Lọc Theo Ngày"
+        android:text="Filter by Date"
         android:layout_marginBottom="16dp"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Doanh Thu Theo Tháng"
+        android:text="Monthly Revenue"
         android:textSize="18sp"
         android:layout_marginBottom="8dp"/>
 
@@ -45,7 +45,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sản Phẩm Bán Chạy"
+        android:text="Top Selling Products"
         android:textSize="18sp"
         android:layout_marginBottom="8dp"/>
 
@@ -58,7 +58,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tình Trạng Tồn Kho"
+        android:text="Inventory Status"
         android:textSize="18sp"
         android:layout_marginBottom="8dp"/>
 
@@ -73,5 +73,5 @@
         android:id="@+id/backButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Quay Lại"/>
+        android:text="Back"/>
 </LinearLayout>

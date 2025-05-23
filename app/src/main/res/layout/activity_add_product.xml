@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Thêm Sản Phẩm"
+        android:text="Add Product"
         android:textSize="24sp"
         android:textStyle="bold"
         android:gravity="center"
@@ -18,7 +18,7 @@
         android:id="@+id/nameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Tên Sản Phẩm"
+        android:hint="Product Name"
         android:inputType="text"
         android:layout_marginBottom="8dp"/>
 
@@ -26,7 +26,7 @@
         android:id="@+id/descriptionEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Mô Tả"
+        android:hint="Description"
         android:inputType="textMultiLine"
         android:layout_marginBottom="8dp"/>
 
@@ -34,7 +34,7 @@
         android:id="@+id/sellingPriceEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Giá Bán"
+        android:hint="Selling Price"
         android:inputType="numberDecimal"
         android:layout_marginBottom="8dp"/>
 
@@ -42,7 +42,7 @@
         android:id="@+id/importPriceEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Giá Nhập"
+        android:hint="Import Price"
         android:inputType="numberDecimal"
         android:layout_marginBottom="8dp"/>
 
@@ -50,7 +50,7 @@
         android:id="@+id/stockEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Số Lượng Tồn Kho"
+        android:hint="Stock"
         android:inputType="number"
         android:layout_marginBottom="8dp"/>
 
@@ -58,7 +58,7 @@
         android:id="@+id/typeEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Loại Sản Phẩm"
+        android:hint="Product Type"
         android:inputType="text"
         android:layout_marginBottom="16dp"/>
 
@@ -72,7 +72,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Quay Lại"
+            android:text="Back"
             android:layout_marginEnd="8dp"/>
 
         <Button
@@ -80,6 +80,6 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Lưu Sản Phẩm"/>
+            android:text="Save Product"/>
     </LinearLayout>
 </LinearLayout>

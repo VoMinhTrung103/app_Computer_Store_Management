@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">app_Computer_Store_Management</string>
+    <string name="admin_dashboard">Admin Dashboard</string>
+    <string name="statistics">Statistics</string>
+    <string name="products">Products</string>
+    <string name="logout">Logout</string>
 </resources>
